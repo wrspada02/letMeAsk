@@ -1,19 +1,12 @@
 
-    import { useState } from "react";
+    import { ButtonHTMLAttributes } from 'react';
 
-    export function Button(){
+    import '../style/button.scss';
 
-        const [counter, setCounter] = useState(0); 
-        //A variavel que eu vou acessar na primeira posicao, e 2 posicao a funcao que vai atualizar essa variavel
+    type ButtonProps = ButtonHTMLAttributes<HTMLButtonElement>
 
-        function increment(){
-            setCounter(counter + 1);
-            console.log(counter);
-        }
-
+    export function Button(props : ButtonProps){
         return (
-            <button onClick={increment}>
-                {counter}
-            </button>
+            <button className="button" {...props}/>
         );
     }
