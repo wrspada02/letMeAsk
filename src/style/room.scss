@@ -11,8 +11,18 @@
                 justify-content: space-between;
                 align-items: center;
 
-                >img{
+                > img{
                     max-height: 45px;
+                }
+
+                > div{
+                    display: flex;
+                    gap: 16px;
+
+                    button{
+                        height: 40px;
+
+                    }
                 }
             }
         }
@@ -60,6 +70,7 @@
                     justify-content: space-between;
                     align-items: center;
                     margin-top: 16px;
+                    margin-bottom: 16px;
 
                     .user-info{
                         display: flex;
@@ -95,6 +106,10 @@
                         }
                     }
                 }
+            }
+
+            .question-list{
+                margin-top: 32px;
             }
         }
     }

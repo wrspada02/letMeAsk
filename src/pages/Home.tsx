@@ -41,6 +41,11 @@
                 return;
             }
 
+            if(roomRef.val().endedAt){
+                alert('Room already close');
+                return;
+            }
+
             navigate(`/rooms/${roomCode}`);
         }
 
