@@ -21,56 +21,56 @@
 
     export function AuthContextProvider(props : AuthContextProviderProps){
       
-    const [user, setUser] = useState<User>();
+        const [user, setUser] = useState<User>();
 
-    useEffect(() => { //Serve para manter as informacoes do usuario mesmo quando da F5 na pagina
-      const unsubscribe = auth.onAuthStateChanged(user => {//este onAuthStateChanged e como se fosse um addEventListener
-        if(user){
-          const { displayName, photoURL, uid } = user;
+        useEffect(() => { //Serve para manter as informacoes do usuario mesmo quando da F5 na pagina
+        const unsubscribe = auth.onAuthStateChanged(user => {//este onAuthStateChanged e como se fosse um addEventListener
+            if(user){
+            const { displayName, photoURL, uid } = user;
 
-            if(!displayName || !photoURL){
-              throw new Error('Missing information from Google Account');
+                if(!displayName || !photoURL){
+                throw new Error('Missing information from Google Account');
+                }
+
+                setUser({
+                id : uid,
+                name : displayName,
+                avatar : photoURL
+                })
             }
+        })
 
-            setUser({
-              id : uid,
-              name : displayName,
-              avatar : photoURL
-            })
+
+        return() => {
+            unsubscribe();
         }
-      })
+        }, [] /* quando a funcao executa apenas 1 vez, passamos um array vazio */);
 
+        async function signInWithGoogle(){
 
-      return() => {
-        unsubscribe();
-      }
-    }, [] /* quando a funcao executa apenas 1 vez, passamos um array vazio */);
+        const provider = new firebase.auth.GoogleAuthProvider();
 
-    async function signInWithGoogle(){
+        const result = await auth.signInWithPopup(provider);
 
-      const provider = new firebase.auth.GoogleAuthProvider();
+            if(result.user){
+                const { displayName, photoURL, uid } = result.user;
 
-      const result = await auth.signInWithPopup(provider);
+                if(!displayName || !photoURL){
+                throw new Error('Missing information from Google Account');
+                }
 
-          if(result.user){
-            const { displayName, photoURL, uid } = result.user;
+                setUser({
+                id : uid,
+                name : displayName,
+                avatar : photoURL
+                })
 
-            if(!displayName || !photoURL){
-              throw new Error('Missing information from Google Account');
             }
+    }
 
-            setUser({
-              id : uid,
-              name : displayName,
-              avatar : photoURL
-            })
-
-        }
-  }
-
-        return(
-            <AuthContext.Provider value={{ user, signInWithGoogle }}> {/* Meu contexto em volta das rotas, elas enxergarao o contexto... */}
-            {props.children}
-            </AuthContext.Provider>
-        );
+            return(
+                <AuthContext.Provider value={{ user, signInWithGoogle }}> {/* Meu contexto em volta das rotas, elas enxergarao o contexto... */}
+                {props.children}
+                </AuthContext.Provider>
+            );
     }

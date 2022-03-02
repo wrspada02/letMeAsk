@@ -3,6 +3,7 @@
 
   import { Home } from "./pages/Home";
   import { NewRoom } from "./pages/NewRoom";
+  import { Room } from "./pages/Room";
 
   import { AuthContextProvider } from './contexts/AuthContext';
 
@@ -10,16 +11,15 @@
   function App() {
     return (
       <BrowserRouter>
-      <AuthContextProvider>
+      <AuthContextProvider>{/* Meu contexto em volta das rotas, elas enxergarao o contexto... */}
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/rooms/new"  element={<NewRoom/>} />
+        <Route path="/rooms/:id"  element={<Room/>} />
       </Routes>
       </AuthContextProvider>
       </BrowserRouter>
     );
   }
-
-  
 
   export default App;
